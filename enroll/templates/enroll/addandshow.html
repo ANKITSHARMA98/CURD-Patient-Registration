@@ -1,0 +1,66 @@
+{% extends 'enroll/base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-3">
+        <h4 class="text-center alert alert-info">Add new Patient</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-success" value="Add">
+        </form>
+    </div>
+    <div class="col-sm-8 offset-1">
+        <h4 class="text-center alert alert-info">Show Patient Information</h4>
+        {% if det %}
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Age</th>
+                <th scope="col">Disease</th>
+                <th scope="col">Doctor name</th>
+                <th scope="col">Doctor fees</th>
+                <th scope="col">Med date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for de in det %}
+              <tr>
+                <th scope="row">{{de.id}}</th>
+                <td>{{de.First_name}}</td>
+                <td>{{de.Last_name}}</td>
+                <td>{{de.Gender}}</td>
+                <td>{{de.Age}}</td>
+                <td>{{de.Disease}}</td>
+                <td>{{de.Doctor_name}}</td>
+                <td>{{de.Doctor_fees}}</td>
+                <td>{{de.Med_date}}</td>
+                <td>
+                    <a href="{% url 'dataupdated' de.id %}" class="btn btn-warning btn-sm ">Edit</a>
+                    <form action="{% url 'datadeleted' de.id %}" method="post" class="btn-sm">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-sm btn-danger " value="Delete">
+
+
+                    </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+
+        
+
+
+        {% else %}
+        <h4 class="text-center alert alert-warning">No Records</h4>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
